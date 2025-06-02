@@ -1,0 +1,4 @@
+CREATE TABLE Genres (
+    GenreID INT IDENTITY(1, 1) PRIMARY KEY,
+    GenreName NVARCHAR(255) NOT NULL
+)
