@@ -10,3 +10,8 @@ CREATE TABLE Games (
     CONSTRAINT FK_Games_Publishers FOREIGN KEY (PublisherID)
         REFERENCES Publishers(PublisherID)
 )
+
+ALTER TABLE Games ADD CountryID INT NULL
+ALTER TABLE Games ADD PlatformID INT NULL
+ALTER TABLE Games ADD CONSTRAINT FK_Games_Countries FOREIGN KEY (CountryID) REFERENCES Countries(CountryID)
+ALTER TABLE Games ADD CONSTRAINT FK_Games_Platforms FOREIGN KEY (PlatformID) REFERENCES Platforms(PlatformID)
