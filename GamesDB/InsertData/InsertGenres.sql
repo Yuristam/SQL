@@ -1,0 +1,16 @@
+INSERT INTO Genres (GenreName) VALUES
+('Adventure'),
+('Arcade'), 
+('Open World'), 
+('Strategy'),
+('Action'),
+('Sandbox'),
+('Survival'),
+('Simulation'),
+('Puzzle'),
+('Racing'),
+('Role-Playing'),
+('Sports'),
+('Horror'),
+('Fighting'),
+('Platformer')
