@@ -1,0 +1,2 @@
+SELECT PublisherName, Description
+FROM Publishers

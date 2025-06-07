@@ -1,0 +1,2 @@
+SELECT CountryName
+FROM Countries

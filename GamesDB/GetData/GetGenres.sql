@@ -1,0 +1,2 @@
+SELECT GenreName
+FROM Genres
