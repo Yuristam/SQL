@@ -5,6 +5,7 @@ CREATE TABLE Games (
     GenreID INT NOT NULL,
     PublisherID INT NOT NULL,
     Price DECIMAL(10, 2) NOT NULL,
+
     CONSTRAINT FK_Games_Genres FOREIGN KEY (GenreID)
         REFERENCES Genres(GenreID),
     CONSTRAINT FK_Games_Publishers FOREIGN KEY (PublisherID)
@@ -13,5 +14,12 @@ CREATE TABLE Games (
 
 ALTER TABLE Games ADD CountryID INT NULL
 ALTER TABLE Games ADD PlatformID INT NULL
-ALTER TABLE Games ADD CONSTRAINT FK_Games_Countries FOREIGN KEY (CountryID) REFERENCES Countries(CountryID)
-ALTER TABLE Games ADD CONSTRAINT FK_Games_Platforms FOREIGN KEY (PlatformID) REFERENCES Platforms(PlatformID)
+ALTER TABLE Games ALTER COLUMN CountryID INT NOT NULL
+ALTER TABLE Games ALTER COLUMN PlatformID INT NOT NULL
+
+ALTER TABLE Games 
+    ADD CONSTRAINT FK_Games_Countries FOREIGN KEY (CountryID) 
+    REFERENCES Countries(CountryID)
+ALTER TABLE Games 
+    ADD CONSTRAINT FK_Games_Platforms FOREIGN KEY (PlatformID) 
+    REFERENCES Platforms(PlatformID)

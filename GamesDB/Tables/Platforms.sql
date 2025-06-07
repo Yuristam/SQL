@@ -2,3 +2,5 @@ CREATE TABLE Platforms (
     PlatformID INT IDENTITY(1,1) PRIMARY KEY,
     Name NVARCHAR(250) NOT NULL
 )
+
+ALTER TABLE Platforms ADD CONSTRAINT UQ_Platform_Name UNIQUE (Name)
