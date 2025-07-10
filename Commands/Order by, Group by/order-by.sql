@@ -32,4 +32,3 @@ SELECT  ProductID,
         Price
 FROM Products
 ORDER BY 3 DESC, 2     -- по порядковому номеру столбцов
- 
