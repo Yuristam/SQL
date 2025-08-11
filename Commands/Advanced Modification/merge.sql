@@ -18,6 +18,9 @@
         [ WHEN NOT MATCHED BY SOURCE [ AND <Доп. условие> ]
             THEN <UPDATE или DELETE> ] [ ...n ]
     [ OUTPUT ];
+
+	!Важно:
+	1. Обязательно должна быть в конце знак ;
 */
 
 ----------------------------------------------------------
@@ -34,7 +37,7 @@ MERGE INTO Pets P
 		INSERT (Name, Price)
 		VALUES (Np.Name, Np.Price)
 	WHEN NOT MATCHED BY SOURCE THEN
-		DELETE
+		DELETE;
 
 -----------------------------------------------------------
 -- с OUTPUT
