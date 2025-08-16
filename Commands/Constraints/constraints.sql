@@ -61,8 +61,12 @@ CREATE TABLE Pets (
 ALTER TABLE Pets ADD CONSTRAINT FK_Pets FOREIGN KEY (BreedID) 
     REFERENCES PetBreeds (BreedID) 
 
------------------
-
 ----------------------------------------------------------
 -- Создание ограничения путем изменения столбца
 ALTER TABLE Products ALTER COLUMN [Price] [Money] NOT NULL 
+
+
+----------------------------------------------------------
+-- Удаление ограничений
+
+ALTER TABLE Products DROP CONSTRAINT PK_Products;
