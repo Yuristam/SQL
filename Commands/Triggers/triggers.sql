@@ -116,6 +116,44 @@ DELETE Products WHERE ProductName = N'Samsung'
 --Смотрим изменения
 SELECT * FROM AuditProducts
 
+
 ----------------------------------------------------------
 -- Включение и Отключение Триггеров
 
+-- ОТКЛ
+DISABLE TRIGGER TRG_Audit_Products ON Products
+
+-- ВКЛ
+ENABLE TRIGGER TRG_Audit_Products ON Products
+
+
+----------------------------------------------------------
+-- Изменение триггера
+
+ALTER TRIGGER TRG_Audit_Products ON Products
+	AFTER INSERT, UPDATE
+AS
+BEGIN
+	DECLARE @SQL_Command VARCHAR(100);
+
+	IF EXISTS (SELECT * FROM inserted) AND EXISTS (SELECT * FROM deleted)
+		SET @SQL_Command = 'UPDATE'
+	ELSE
+		SET @SQL_Command = 'INSERT'
+
+	INSERT INTO AuditProducts (DtChange, UserName, SQL_Command, ProductId_Old,
+							   ProductId_New,CategoryId_Old, CategoryId_New,
+							   ProductName_Old, ProductName_New, Price_Old, Price_New)
+		SELECT GETDATE(), SUSER_SNAME(), @SQL_Command,
+				D.ProductId, I.ProductId,
+				D.CategoryId, I.CategoryId,
+				D.ProductName, I.ProductName,
+				D.Price, I.Price
+		FROM inserted I
+		LEFT JOIN deleted D ON I.ProductId = D.ProductId
+END
+
+----------------------------------------------------------
+-- Удаление триггера
+
+DROP TRIGGER TRG_Audit_Products
