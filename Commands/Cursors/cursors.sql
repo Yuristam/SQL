@@ -15,6 +15,8 @@
     🔹 PRIOR - перемещает указатель на предыдущую строку
     🔹 FIRST - на первую строку 
     🔹 LAST - на последнюю строку
+    🔹 ABSOLUTE n → абсолютная позиция по номеру строки (от начала, либо отрицательное — с конца).
+    🔹 RELATIVE n → относительный сдвиг (вперёд или назад).
     ❕ только для этого нужно указать параметр SCROLL, во время объявления курсора (CURSOR SCROLL FOR).
 
 
@@ -104,4 +106,48 @@ DEALLOCATE PeopleCursor;
     LAST → Ольга
     PRIOR → Пётр (строка перед Ольгой)
     NEXT → снова Ольга (т.к. мы вернулись вперёд)
+*/
+
+
+-----------------------------------------------------
+-- Пример с SCROLL (ABSOLUTE, RELATIVE)
+
+INSERT INTO Drinks (Name)
+VALUES (N'Чай'), (N'Кофе'), (N'Сок'), (N'Вода'), (N'Молоко');
+
+-- Курсор
+DECLARE @ID INT, @Name NVARCHAR(50);
+
+DECLARE DrinksCursor CURSOR SCROLL FOR
+    SELECT ID, Name FROM Drinks ORDER BY ID;
+
+OPEN DrinksCursor;
+
+-- ABSOLUTE 3 → перейти к 3-й строке (Сок)
+FETCH ABSOLUTE 3 FROM DrinksCursor INTO @ID, @Name;
+PRINT 'ABSOLUTE 3: ' + CAST(@ID AS NVARCHAR) + ' - ' + @Name;
+
+-- RELATIVE -1 → сдвинуться на одну строку назад (Кофе)
+FETCH RELATIVE -1 FROM DrinksCursor INTO @ID, @Name;
+PRINT 'RELATIVE -1 (назад): ' + CAST(@ID AS NVARCHAR) + ' - ' + @Name;
+
+-- RELATIVE +2 → сдвинуться на 2 строки вперёд (Молоко)
+FETCH RELATIVE 2 FROM DrinksCursor INTO @ID, @Name;
+PRINT 'RELATIVE +2 (вперёд): ' + CAST(@ID AS NVARCHAR) + ' - ' + @Name;
+
+-- ABSOLUTE -1 → последняя строка (Молоко)
+FETCH ABSOLUTE -1 FROM DrinksCursor INTO @ID, @Name;
+PRINT 'ABSOLUTE -1 (последняя): ' + CAST(@ID AS NVARCHAR) + ' - ' + @Name;
+
+CLOSE DrinksCursor;
+DEALLOCATE DrinksCursor;
+
+---------
+/*
+    OUTPUT:
+
+    ABSOLUTE 3 → Сок
+    RELATIVE -1 → Кофе
+    RELATIVE +2 → Молоко
+    ABSOLUTE -1 → Молоко (последняя строка)
 */
