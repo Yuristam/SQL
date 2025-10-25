@@ -94,7 +94,3 @@ SET @XML_Doc='<Root>
 SELECT TMP.col.value('@id','INT') AS Id,
 		TMP.col.value('@Name', 'NVARCHAR(10)') AS Name
 FROM @XML_Doc.nodes('/Root/row') AS TMP(Col);
-
-
--------------------------------------------------
--- 
